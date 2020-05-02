@@ -5,11 +5,17 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class TankFrame extends Frame {
 
-    Tank mainTank = new Tank(200,200,Dir.DOWN);
-    Bullet b = new Bullet(300,300,Dir.DOWN);
+    Tank mainTank = new Tank(200,200,Dir.DOWN,this);
+    List<Bullet> bullets = new ArrayList<>();
+    List<Tank> enemyTanks = new ArrayList<>();
+
     static final int GAME_WIDTH=800, GAME_HEIGHT=600;
 
 
@@ -20,6 +26,12 @@ public class TankFrame extends Frame {
         setTitle("坦克大战");
         setVisible(true);
 
+        for (int i=0;i<5;i++) {
+            enemyTanks.add(new Tank(
+                    new Random().nextInt(GAME_WIDTH-50),
+                    new Random().nextInt(GAME_HEIGHT-50),
+                    Dir.DOWN, this));
+        }
         addKeyListener(new MyKeyLister());
         addWindowListener(new WindowAdapter() {
             @Override
@@ -31,9 +43,19 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.WHITE);
+        g.drawString("子弹的数量是:"+bullets.size(),20,40);
+        g.setColor(c);
 
         mainTank.paint(g);
-        b.paint(g);
+        //b.paint(g);
+        for(int i=0;i<bullets.size();i++){
+            bullets.get(i).paint(g);
+        }
+        for(int i=0;i<enemyTanks.size();i++){
+            enemyTanks.get(i).paint(g);
+        }
         //paint的画图是把Frame全部清空一遍的
 
     }
@@ -100,6 +122,8 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_DOWN:
                     bD = false;
                     break;
+                case KeyEvent.VK_CONTROL:
+                    mainTank.fire();
                 default:
                     break;
             }

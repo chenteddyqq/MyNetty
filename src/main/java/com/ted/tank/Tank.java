@@ -8,11 +8,13 @@ public class Tank {
     Dir dir = Dir.DOWN;
     private static final int SPEED = 5;
     private boolean moving = false;
+    private TankFrame tf = null; //持有引用
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, TankFrame f) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = f;
     }
 
     public void paint(Graphics g) {
@@ -58,5 +60,9 @@ public class Tank {
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+
+    public void fire() {
+        tf.bullets.add(new Bullet(this.x,this.y,this.dir, this.tf));
     }
 }
