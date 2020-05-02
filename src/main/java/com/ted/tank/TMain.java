@@ -4,9 +4,9 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class T {
+public class TMain {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 //        Frame f = new Frame();
 //        f.setSize(800,600);
 //        f.setResizable(false);
@@ -20,5 +20,9 @@ public class T {
 //            }
 //        });
         TankFrame t = new TankFrame();
+        while (true){
+            Thread.sleep(50);
+            t.repaint();
+        }
     }
 }
