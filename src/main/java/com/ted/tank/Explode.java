@@ -1,6 +1,11 @@
 package com.ted.tank;
 
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class Explode {
     int x;
@@ -24,6 +29,13 @@ public class Explode {
         if(step >= ResourceLoader.explodes.length) {
             step=0;
             die();
+            try {
+                InputStream in = new FileInputStream("audio/explode.wav");
+                AudioStream as = new AudioStream(in);
+                AudioPlayer.player.start(as);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

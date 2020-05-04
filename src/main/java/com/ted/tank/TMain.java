@@ -1,8 +1,10 @@
 package com.ted.tank;
 
-import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Random;
 
 public class TMain {
@@ -21,24 +23,12 @@ public class TMain {
 //            }
 //        });
         TankFrame t = new TankFrame();
+        int initialTankCount = Integer.parseInt((String) PropertyMgr.get("initTankCount"));
 
-        for (int i=0;i<5;i++) {
-            int dirNum = new Random().nextInt(4);
-            Dir dir = null;
-            switch (dirNum){
-                case 0:
-                    dir = Dir.LEFT;
-                    break;
-                case 1:
-                    dir = Dir.RIGHT;
-                    break;
-                case 2:
-                    dir = Dir.UP;
-                    break;
-                default:
-                    dir = Dir.DOWN;
-                    break;
-            }
+        for (int i=0;i<initialTankCount;i++) {
+
+            Dir dir = Dir.values()[new Random().nextInt(4)];
+
             Tank enemyTank = new Tank(
                     new Random().nextInt(TankFrame.GAME_WIDTH-50),
                     new Random().nextInt(TankFrame.GAME_HEIGHT-50),
@@ -46,6 +36,21 @@ public class TMain {
             enemyTank.setMoving(true);
             t.enemyTanks.add(enemyTank);
         }
+
+        new Thread(()->{
+            try {
+                InputStream in = new FileInputStream("audio/war1.wav");
+                AudioStream as = new AudioStream(in);
+                while (true) {
+                    as.mark(123456);
+                    AudioPlayer.player.start(as);
+                    while (as.available()>0);
+                    as.reset();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
 
         while (true){
             Thread.sleep(50);

@@ -1,6 +1,11 @@
 package com.ted.tank;
 
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.Random;
 
 public class Tank {
@@ -88,14 +93,14 @@ public class Tank {
             default:
                 break;
         }
-        rect.x = x;
-        rect.y = y;
         if(this.group ==Group.BAD && random.nextInt(10)>8){
             fire();
             randomDir();
         }
         //做个边界检测 有新功能的时候，写个新的方法，不要把所有的功能都放在一起。
         boundsCheck();
+        rect.x = x;
+        rect.y = y;
     }
 
     private void boundsCheck() {
@@ -121,6 +126,13 @@ public class Tank {
     public void fire() {
         tf.bullets.add(new Bullet(this.x+Tank.WIDTH/2-Bullet.WIDTH/2,
                 this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2,this.dir,this.group, this.tf));
+//        try {
+//            InputStream in = new FileInputStream("audio/tank_fire.wav");
+//            AudioStream as = new AudioStream(in);
+//            AudioPlayer.player.start(as);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void die() {

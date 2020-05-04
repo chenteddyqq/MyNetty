@@ -1,6 +1,7 @@
 package com.ted.tankTest;
 
 import com.ted.tank.Dir;
+import com.ted.tank.PropertyMgr;
 import com.ted.tank.ResourceLoader;
 import com.ted.tank.Tank;
 import org.junit.Assert;
@@ -17,6 +18,8 @@ public class ImageTest {
     @Test
     public void test() throws IOException {
 
-        Assert.assertNotNull(ResourceLoader.explodes[0]);
+        Object initTankCount = PropertyMgr.get("initTankCount");
+        System.out.println(initTankCount);
+        Assert.assertNotNull(initTankCount);
     }
 }
