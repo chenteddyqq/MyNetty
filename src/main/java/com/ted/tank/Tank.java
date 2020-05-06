@@ -17,18 +17,19 @@ public class Tank {
     Rectangle rect = new Rectangle();
     private static final int SPEED = 5;
     private boolean moving = false;
-    private TankFrame tf = null; //持有引用
+    //TankFrame tf = null; //持有引用
     public boolean live = true;
-    private Group group = Group.BAD;
+    Group group = Group.BAD;
     private boolean flip = true;
     private Random random = new Random();
+    GameModel gm;
 
-    public Tank(int x, int y, Dir dir,Group group, TankFrame f) {
+    public Tank(int x, int y, Dir dir,Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = f;
+        this.gm = gm;
         rect.x = this.x;
         rect.y = this.y;
         rect.width = Tank.WIDTH;
@@ -94,7 +95,7 @@ public class Tank {
                 break;
         }
         if(this.group ==Group.BAD && random.nextInt(10)>8){
-            fire();
+            fire(DefaultFireStrategy.getInstance());
             randomDir();
         }
         //做个边界检测 有新功能的时候，写个新的方法，不要把所有的功能都放在一起。
@@ -106,8 +107,8 @@ public class Tank {
     private void boundsCheck() {
         if(this.x<0) x = 0;
         if(this.y<30) y = 30;
-        if(this.x>TankFrame.GAME_WIDTH-Tank.WIDTH) x = TankFrame.GAME_WIDTH-Tank.WIDTH;
-        if(this.y> TankFrame.GAME_HEIGHT-Tank.HEIGHT) y = TankFrame.GAME_HEIGHT-Tank.HEIGHT;
+        if(this.x>GameModel.GAME_WIDTH-Tank.WIDTH) x = GameModel.GAME_WIDTH-Tank.WIDTH;
+        if(this.y> GameModel.GAME_HEIGHT-Tank.HEIGHT) y = GameModel.GAME_HEIGHT-Tank.HEIGHT;
     }
 
     private void randomDir() {
@@ -123,16 +124,8 @@ public class Tank {
         this.dir = dir;
     }
 
-    public void fire() {
-        tf.bullets.add(new Bullet(this.x+Tank.WIDTH/2-Bullet.WIDTH/2,
-                this.y+Tank.HEIGHT/2-Bullet.HEIGHT/2,this.dir,this.group, this.tf));
-//        try {
-//            InputStream in = new FileInputStream("audio/tank_fire.wav");
-//            AudioStream as = new AudioStream(in);
-//            AudioPlayer.player.start(as);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+    public void fire(FireStrategy f) {
+        f.fire(this);
     }
 
     public void die() {

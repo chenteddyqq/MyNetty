@@ -12,14 +12,14 @@ public class Explode {
     int y;
     public static  final int WIDTH = ResourceLoader.explodes[0].getWidth();
     public static  final int HEIGHT = ResourceLoader.explodes[0].getHeight();
-    private TankFrame tf = null; //持有引用
+    GameModel gm = null; //持有引用
     public boolean live = true;
     private int step = 0;
 
-    public Explode(int x, int y, TankFrame tf) {
+    public Explode(int x, int y, GameModel gm) {
         this.x = x;
         this.y = y;
-        this.tf = tf;
+        this.gm = gm;
 
         //new Audio("audio/war1.wav").play();
     }
