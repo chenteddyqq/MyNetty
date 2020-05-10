@@ -1,20 +1,16 @@
 package com.ted.tank;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-
 import java.awt.*;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Random;
 
-public class Tank {
-    int x;
-    int y;
+public class Tank extends GameObject {
+    public int x;
+    public int y;
+    public int preX,preY;
     Dir dir = Dir.DOWN;
     public static  final int WIDTH = ResourceLoader.goodtankU.getWidth();
     public static  final int HEIGHT = ResourceLoader.goodtankU.getHeight();
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
     private static final int SPEED = 5;
     private boolean moving = false;
     //TankFrame tf = null; //持有引用
@@ -22,18 +18,24 @@ public class Tank {
     Group group = Group.BAD;
     private boolean flip = true;
     private Random random = new Random();
-    GameModel gm;
 
-    public Tank(int x, int y, Dir dir,Group group, GameModel gm) {
+
+    public Rectangle getRect() {
+        return rect;
+    }
+
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
+
         rect.x = this.x;
         rect.y = this.y;
         rect.width = Tank.WIDTH;
         rect.height = Tank.HEIGHT;
+        preX = x;
+        preY = y;
     }
 
     public Group getGroup() {
@@ -45,7 +47,10 @@ public class Tank {
     }
 
     public void paint(Graphics g) {
-        if (!live) return;
+        if (!live){
+            GameModel.getInstance().remove(this);
+            return;
+        }
 
         switch (dir) {
             case LEFT:
@@ -78,6 +83,8 @@ public class Tank {
 
     private void move() {
         if (!moving) return;
+        preX = x;
+        preY = y;
         switch (dir){
             case LEFT:
                 x-=SPEED;
@@ -113,6 +120,11 @@ public class Tank {
 
     private void randomDir() {
         this.dir = Dir.values()[random.nextInt(4)];
+    }
+
+    public void back(){
+        this.x = this.preX;
+        this.y = this.preY;
     }
 
 

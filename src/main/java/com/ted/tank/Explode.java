@@ -7,7 +7,7 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class Explode {
+public class Explode extends GameObject {
     int x;
     int y;
     public static  final int WIDTH = ResourceLoader.explodes[0].getWidth();
@@ -28,6 +28,7 @@ public class Explode {
         g.drawImage(ResourceLoader.explodes[step++],x,y,null);
         if(step >= ResourceLoader.explodes.length) {
             step=0;
+            gm.remove(this);
             die();
             try {
                 InputStream in = new FileInputStream("audio/explode.wav");

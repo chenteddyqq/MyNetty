@@ -23,7 +23,7 @@ public class FourFireDirection implements FireStrategy {
 
         Dir[] ds = Dir.values();
         for (Dir d : ds){
-            new Bullet(bX,bY,d,t.group, t.gm);
+            new Bullet(bX,bY,d,t.group);
         }
         if (t.group == Group.GOOD){
             new Thread(()->{

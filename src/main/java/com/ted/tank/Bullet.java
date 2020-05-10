@@ -2,29 +2,28 @@ package com.ted.tank;
 
 import java.awt.*;
 
-public class Bullet {
+public class Bullet extends GameObject {
 
     private int x,y;
     private final int SPEED = 15;
     private Dir dir;
     public static final int WIDTH =ResourceLoader.bulletL.getWidth(),
             HEIGHT =ResourceLoader.bulletL.getHeight();
-    private GameModel gm = null;
     public boolean live = true;
-    Rectangle rect = new Rectangle();
+    public Rectangle rect = new Rectangle();
     private Group group = Group.BAD;
 
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
+
         rect.x = this.x;
         rect.y = this.y;
         rect.width = Bullet.WIDTH;
         rect.height = Bullet.HEIGHT;
-        gm.bullets.add(this);
+        GameModel.getInstance().add(this);
     }
 
     public Group getGroup() {
@@ -36,7 +35,10 @@ public class Bullet {
     }
 
     public void paint(Graphics g) {
-        if (!live) return;
+        if (!live){
+            GameModel.getInstance().remove(this);
+            return;
+        }
         switch (dir){
             case LEFT:
                 g.drawImage(ResourceLoader.bulletL,x,y,null);
@@ -78,20 +80,22 @@ public class Bullet {
         if(x<0 || y<0 ||x> GameModel.GAME_WIDTH || y>GameModel.GAME_HEIGHT) this.die();
     }
 
-    public void collideWith(Tank tank) {
-        if (this.group == tank.getGroup()) return;
+    /*public boolean collideWith(Tank tank) {
+        if (this.group == tank.getGroup()) return false;
         //TODO：用一个rect来记录子弹的位置，不能new太多
 
         if(this.rect.intersects(tank.rect)){
             tank.die();
             this.die();
-            gm.explodes.add(new Explode(
+            gm.add(new Explode(
                     tank.x+(Tank.WIDTH-Explode.WIDTH)/2,
                     tank.y+(Tank.HEIGHT-Explode.HEIGHT)/2,gm));
+            return true;
         }
-    }
+        return false;
+    }*/
 
-    private void die() {
+    public void die() {
         this.live = false;
     }
 }
