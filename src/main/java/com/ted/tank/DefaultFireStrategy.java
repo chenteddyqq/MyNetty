@@ -1,5 +1,7 @@
 package com.ted.tank;
 
+import com.ted.tank.decorator.LineDecorator;
+import com.ted.tank.decorator.RectDecorator;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -16,7 +18,11 @@ public class DefaultFireStrategy implements FireStrategy {
     public void fire(Tank t) {
         int bX = t.x+Tank.WIDTH/2-Bullet.WIDTH/2;
         int bY = t.y+Tank.HEIGHT/2-Bullet.HEIGHT/2;
-        new Bullet(bX,bY,t.dir,t.group);
+        //new Bullet(bX,bY,t.dir,t.group);
+        GameModel.getInstance().add(
+                new RectDecorator(
+                        new LineDecorator(
+                        new Bullet(bX,bY,t.dir,t.group))));
         if (t.group == Group.GOOD){
             new Thread(()->{
                 try {

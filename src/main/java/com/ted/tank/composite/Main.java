@@ -1,0 +1,73 @@
+package com.ted.tank.composite;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+
+    public static void main(String[] args) {
+        BranchNode root = new BranchNode("root");
+        BranchNode chapter1 = new BranchNode("chapter1");
+        BranchNode chapter2 = new BranchNode("chapter2");
+        Node c11 = new LeadNode("c11");
+        Node c12 = new LeadNode("c12");
+        BranchNode b21 = new BranchNode("section21");
+        Node c211 = new LeadNode("c211");
+        Node c212 = new LeadNode("c212");
+
+        root.add(chapter2);
+        root.add(chapter1);
+        chapter1.add(c11);
+        chapter1.add(c12);
+        chapter2.add(b21);
+        b21.add(c211);
+        b21.add(c212);
+
+        tree(root,0);
+    }
+
+    static void tree(Node b, int depth){
+        for (int i=0;i<depth;i++){
+            System.out.print("-");
+        }
+        b.p();
+        if (b instanceof BranchNode){
+            BranchNode branchNode = (BranchNode)b;
+            for (Node tmpNode : branchNode.nodes)
+                tree(tmpNode,depth+1);
+        }
+    }
+}
+
+abstract class Node{
+    abstract public void p();
+}
+
+class LeadNode extends Node{
+
+    public String content;
+
+    public LeadNode(String content) {
+        this.content = content;
+    }
+    @Override
+    public void p() {
+        System.out.println(content);
+    }
+}
+
+class BranchNode extends Node{
+    public String name;
+
+    public BranchNode(String name) {
+        this.name = name;
+    }
+    List<Node> nodes = new ArrayList<>();
+    @Override
+    public void p() {
+        System.out.println(name);
+    }
+    public void add(Node node){
+        nodes.add(node);
+    }
+}

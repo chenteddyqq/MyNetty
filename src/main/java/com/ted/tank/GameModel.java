@@ -1,6 +1,8 @@
 package com.ted.tank;
 
 import com.ted.tank.cor.ColliderChain;
+import com.ted.tank.decorator.RectDecorator;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;

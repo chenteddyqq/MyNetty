@@ -8,8 +8,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class Explode extends GameObject {
-    int x;
-    int y;
+
     public static  final int WIDTH = ResourceLoader.explodes[0].getWidth();
     public static  final int HEIGHT = ResourceLoader.explodes[0].getHeight();
     GameModel gm = null; //持有引用
@@ -42,5 +41,15 @@ public class Explode extends GameObject {
 
     public void die(){
         this.live = false;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 }

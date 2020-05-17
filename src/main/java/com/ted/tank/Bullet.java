@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class Bullet extends GameObject {
 
-    private int x,y;
     private final int SPEED = 15;
     private Dir dir;
     public static final int WIDTH =ResourceLoader.bulletL.getWidth(),
@@ -23,6 +22,7 @@ public class Bullet extends GameObject {
         rect.y = this.y;
         rect.width = Bullet.WIDTH;
         rect.height = Bullet.HEIGHT;
+        if(this.getGroup()==Group.GOOD)
         GameModel.getInstance().add(this);
     }
 
@@ -56,6 +56,16 @@ public class Bullet extends GameObject {
                 break;
         }
         move();
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     private void move() {

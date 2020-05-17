@@ -4,8 +4,7 @@ import java.awt.*;
 import java.util.Random;
 
 public class Tank extends GameObject {
-    public int x;
-    public int y;
+
     public int preX,preY;
     Dir dir = Dir.DOWN;
     public static  final int WIDTH = ResourceLoader.goodtankU.getWidth();
@@ -142,5 +141,14 @@ public class Tank extends GameObject {
 
     public void die() {
         this.live = false;
+    }
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 }
