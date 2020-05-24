@@ -1,8 +1,5 @@
 package com.ted.tank;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-
 import java.awt.*;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -30,9 +27,7 @@ public class Explode extends GameObject {
             gm.remove(this);
             die();
             try {
-                InputStream in = new FileInputStream("audio/explode.wav");
-                AudioStream as = new AudioStream(in);
-                AudioPlayer.player.start(as);
+                new Audio("audio/explode.wav").play();
             } catch (Exception e) {
                 e.printStackTrace();
             }

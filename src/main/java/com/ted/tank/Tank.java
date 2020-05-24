@@ -1,6 +1,8 @@
 package com.ted.tank;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Tank extends GameObject {
@@ -139,6 +141,14 @@ public class Tank extends GameObject {
         f.fire(this);
     }
 
+    private List<TankFireObserver> fireObservers = Arrays.asList(new TankFireHandler());
+    public void handleFireKey(){
+        TankFireEvent event = new TankFireEvent(this);
+        for (TankFireObserver o:fireObservers){
+            o.actionOnFire(event);
+        }
+    }
+
     public void die() {
         this.live = false;
     }
@@ -152,3 +162,17 @@ public class Tank extends GameObject {
         return HEIGHT;
     }
 }
+
+interface TankFireObserver{
+    void actionOnFire(TankFireEvent e);
+}
+
+class TankFireHandler implements TankFireObserver{
+    @Override
+    public void actionOnFire(TankFireEvent e) {
+        e.getSource().fire(FourFireDirection.getInstance());
+    }
+}
+
+
+

@@ -1,7 +1,5 @@
 package cn.ted.design.proxy.JDKProxy;
 
-import sun.misc.ProxyGenerator;
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -46,7 +44,7 @@ public class Tank implements Movable {
                 );
         m.move("lalalala");
         m.calls();
-        JdkProxySourceClass.writeClassToDisk("/Users/chenteddy/Desktop/cn/$Proxy0.class");
+        //JdkProxySourceClass.writeClassToDisk("/Users/chenteddy/Desktop/cn/$Proxy0.class");
     }
 }
 
@@ -97,7 +95,7 @@ class LongProxy implements Movable{
     }
 }
 
-class JdkProxySourceClass {
+/*class JdkProxySourceClass {
 
     public static void writeClassToDisk(String path) {
         //其实真正生成代理的就是这句话
@@ -119,4 +117,4 @@ class JdkProxySourceClass {
             }
         }
     }
-}
+}*/

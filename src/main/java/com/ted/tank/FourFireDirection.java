@@ -1,11 +1,5 @@
 package com.ted.tank;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 public class FourFireDirection implements FireStrategy {
 
     private static FourFireDirection f = new FourFireDirection();
@@ -28,9 +22,7 @@ public class FourFireDirection implements FireStrategy {
         if (t.group == Group.GOOD){
             new Thread(()->{
                 try {
-                    InputStream in = new FileInputStream("audio/tank_fire.wav");
-                    AudioStream as = new AudioStream(in);
-                    AudioPlayer.player.start(as);
+                    new Audio("audio/tank_fire.wav").play();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

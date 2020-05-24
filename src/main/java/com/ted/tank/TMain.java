@@ -1,8 +1,5 @@
 package com.ted.tank;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;

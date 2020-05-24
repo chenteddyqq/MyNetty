@@ -2,8 +2,7 @@ package com.ted.tank;
 
 import com.ted.tank.decorator.LineDecorator;
 import com.ted.tank.decorator.RectDecorator;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -26,9 +25,7 @@ public class DefaultFireStrategy implements FireStrategy {
         if (t.group == Group.GOOD){
             new Thread(()->{
                 try {
-                    InputStream in = new FileInputStream("audio/tank_fire.wav");
-                    AudioStream as = new AudioStream(in);
-                    AudioPlayer.player.start(as);
+                    new Audio("audio/tank_fire.wav").play();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
